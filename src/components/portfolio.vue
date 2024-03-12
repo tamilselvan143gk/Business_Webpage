@@ -25,12 +25,19 @@
       <div class="portfolio-container relative">
         <div
           class="portfolio-position absolute"
-          :class="item.class"
+          :style="{
+                top: item.top + 'px',
+                left: item.left + 'px',
+              }"
           v-for="item in filteredItems"
           :key="item.id"
         >
           <div class="portfolio-wrap">
-            <img :src="item.src" :height="item.height" :width="item.width" />
+            <img
+              :src="item.src"
+              :height="item.height"
+              :width="item.width"
+            />
             <div class="portfolio-info">
               <p class="text-xl text-white uppercase">{{ item.title }}</p>
               <p class="text-base text-gray-300 uppercase italic">
@@ -116,7 +123,11 @@
   </section>
   <section class="testimonials py-20 px-24">
     <div class="container">
-      <div v-for="(testimonial, index) in testimonials" :key="index" class="mySlides fade text-center items-center text-white">
+      <div
+        v-for="(testimonial, index) in testimonials"
+        :key="index"
+        class="mySlides fade text-center items-center text-white"
+      >
         <div class="flex justify-center">
           <img
             class="block mx-auto my-0 rounded-full p-2 bg-[rgba(0,0,0,0.3)]"
@@ -126,23 +137,24 @@
           />
         </div>
         <div class="text">
-          <p class="text-xl text-white font-semibold">{{testimonial.name}}</p>
-          <p class="text-sm text-gray-200">{{testimonial.role}}</p>
+          <p class="text-xl text-white font-semibold">{{ testimonial.name }}</p>
+          <p class="text-sm text-gray-200">{{ testimonial.role }}</p>
           <p class="px-5 text-gray-200 italic">
             <i class="fa-solid fa-quote-left text-xl"></i>
-            {{testimonial.quote}}
+            {{ testimonial.quote }}
             <i class="fa-solid fa-quote-right text-xl"></i>
           </p>
         </div>
       </div>
     </div>
     <div class="text-center pt-3">
-        <span
-          v-for="(testimonial, index) in testimonials" :key="index" @click="currentSlide(index + 1)"
-          class="dot h-4 w-4 cursor-pointer my-0 mx-[2px] inline-block rounded-full bg-gray-200"
-        ></span>
-        
-      </div>
+      <span
+        v-for="(testimonial, index) in testimonials"
+        :key="index"
+        @click="currentSlide(index + 1)"
+        class="dot h-4 w-4 cursor-pointer my-0 mx-[2px] inline-block rounded-full bg-gray-200"
+      ></span>
+    </div>
   </section>
 </template>
 
@@ -169,7 +181,8 @@ export default {
           height: 520,
           width: 320,
           filter: "filter-app portfolio-item",
-          class: "img1",
+          top: 0,
+          left: 0,
         },
         {
           src: portfolio_2,
@@ -178,7 +191,8 @@ export default {
           height: 520,
           width: 320,
           filter: "filter-web portfolio-item",
-          class: "img2",
+          top: 0,
+          left: 350,
         },
         {
           src: portfolio_3,
@@ -187,7 +201,8 @@ export default {
           height: 520,
           width: 320,
           filter: "filter-app portfolio-item",
-          class: "img3",
+          top: 0,
+          left: 700,
         },
         {
           src: portfolio_4,
@@ -196,7 +211,8 @@ export default {
           height: 520,
           width: 320,
           filter: "filter-card portfolio-item",
-          class: "img4",
+          top: 210,
+          left: 700,
         },
         {
           src: portfolio_5,
@@ -205,7 +221,8 @@ export default {
           height: 520,
           width: 320,
           filter: "filter-web portfolio-item",
-          class: "img5",
+          top: 245,
+          left: 350,
         },
         {
           src: portfolio_6,
@@ -214,7 +231,8 @@ export default {
           height: 520,
           width: 320,
           filter: "filter-app portfolio-item",
-          class: "img6",
+          top: 360,
+          left: 0,
         },
         {
           src: portfolio_7,
@@ -223,7 +241,8 @@ export default {
           height: 520,
           width: 320,
           filter: "filter-card portfolio-item",
-          class: "img7",
+          top: 450,
+          left: 700,
         },
         {
           src: portfolio_8,
@@ -232,7 +251,8 @@ export default {
           height: 520,
           width: 320,
           filter: "filter-card portfolio-item",
-          class: "img8",
+          top: 690,
+          left: 700,
         },
         {
           src: portfolio_9,
@@ -241,7 +261,8 @@ export default {
           height: 520,
           width: 320,
           filter: "filter-web portfolio-item",
-          class: "img9",
+          top: 755,
+          left: 350,
         },
       ],
       selecters: ["All", "App", "Card", "Web"],
@@ -318,7 +339,6 @@ export default {
     }
   },
   mounted() {
-    // Show only Saul Goodman's testimonial when the component is mounted
     this.showSlides(1);
   },
   computed: {
@@ -417,51 +437,6 @@ export default {
   opacity: 1;
 }
 
-.img1 {
-  top: 0;
-  left: 0;
-}
-
-.img2 {
-  top: 0;
-  left: 354px;
-}
-
-.img3 {
-  top: 0;
-  right: 0;
-}
-
-.img5 {
-  top: 250px;
-  left: 354px;
-}
-
-.img4 {
-  top: 215px;
-  right: 0;
-}
-
-.img7 {
-  top: 460px;
-  right: 0;
-}
-
-.img8 {
-  top: 700px;
-  right: 0;
-}
-
-.img9 {
-  top: 760px;
-  right: 350px;
-}
-
-.img6 {
-  left: 0;
-  top: 360px;
-}
-
 @media screen and (max-width: 768px) {
   .portfolio-container {
     margin-bottom: 20px;
@@ -547,11 +522,11 @@ export default {
   background: linear-gradient(rgba(2, 2, 2, 0.5), rgba(0, 0, 0, 0.5)),
     url(public/img/testimonials-bg.jpg) fixed center center;
 }
-.dot{
+.dot {
   transition: 0.5s;
 }
-.active, .dot:hover {
+.active,
+.dot:hover {
   background-color: yellowgreen;
 }
-
 </style>
