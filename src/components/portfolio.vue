@@ -26,18 +26,14 @@
         <div
           class="portfolio-position absolute"
           :style="{
-                top: item.top + 'px',
-                left: item.left + 'px',
-              }"
+            top: item.top + 'px',
+            left: item.left + 'px',
+          }"
           v-for="item in filteredItems"
           :key="item.id"
         >
           <div class="portfolio-wrap">
-            <img
-              :src="item.src"
-              :height="item.height"
-              :width="item.width"
-            />
+            <img :src="item.src" :height="item.height" :width="item.width" />
             <div class="portfolio-info">
               <p class="text-xl text-white uppercase">{{ item.title }}</p>
               <p class="text-base text-gray-300 uppercase italic">
@@ -310,6 +306,7 @@ export default {
         },
       ],
       slideIndex: 1,
+      portfolioContainerHeight: 0,
     };
   },
   methods: {
@@ -317,17 +314,21 @@ export default {
       this.selected = selecters;
     },
     plusSlides(n) {
-      this.showSlides(this.slideIndex += n);
+      this.showSlides((this.slideIndex += n));
     },
     currentSlide(n) {
-      this.showSlides(this.slideIndex = n);
+      this.showSlides((this.slideIndex = n));
     },
     showSlides(n) {
       let i;
       let slides = document.getElementsByClassName("mySlides");
       let dots = document.getElementsByClassName("dot");
-      if (n > slides.length) { this.slideIndex = 1; }
-      if (n < 1) { this.slideIndex = slides.length; }
+      if (n > slides.length) {
+        this.slideIndex = 1;
+      }
+      if (n < 1) {
+        this.slideIndex = slides.length;
+      }
       for (i = 0; i < slides.length; i++) {
         slides[i].style.display = "none";
       }
@@ -336,7 +337,7 @@ export default {
       }
       slides[this.slideIndex - 1].style.display = "block";
       dots[this.slideIndex - 1].className += " active";
-    }
+    },
   },
   mounted() {
     this.showSlides(1);
@@ -353,12 +354,30 @@ export default {
           (item) => item.title === this.selected
         );
         let counter = 0;
+        let row = 0;
+        let column = 0;
+        let maxColumns = 3;
+        let xOffset = 0;
+        let yOffset = 0;
+        const itemWidth = 320;
+        const itemHeight = 520;
+        const gap = 30;
         return filteredItems.map((item) => {
+          if (column >= maxColumns) {
+            row++;
+            column = 0;
+          }
+          xOffset = column * ( itemWidth + gap );
+          yOffset = row * ( itemHeight + gap );
+
+          column++;
           let imgClass = `img${counter + 1}`;
           counter++;
           return {
             ...item,
             class: imgClass,
+            top: yOffset,
+            left: xOffset,
           };
         });
       }
