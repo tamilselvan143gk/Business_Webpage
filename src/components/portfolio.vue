@@ -54,7 +54,7 @@
     </div>
   </section>
 
-  <section class="mt-[1100px] mb-10 mx-24">
+  <section class="mb-10 mx-24">
     <div class="flex gap-10">
       <div>
         <img src="../../public/img/counts-img.jpg" height="970" width="970" />
